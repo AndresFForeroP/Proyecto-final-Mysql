@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS subdivisioncategories (
 );
 
 CREATE TABLE IF NOT EXISTS citiesormunicipalities (
-    code VARCHAR(6) PRIMARY KEY,
-    name VARCHAR(60) UNIQUE,
+    code INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(60),
     statereg_id VARCHAR(6)
 );
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS companies (
     type_id INT,
     name VARCHAR(80),
     category_id INT(11),
-    city_id VARCHAR(6),
+    city_id INT,
     audience_id INT,
     cellphone VARCHAR(15) UNIQUE,
     email VARCHAR(80) UNIQUE
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS details_favorites (
 CREATE TABLE IF NOT EXISTS customers (
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(80),
-    city_id VARCHAR(6),
+    city_id INT,
     audience_id INT,
     cellphone VARCHAR(20) UNIQUE,
     email VARCHAR(100) UNIQUE,
