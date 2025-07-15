@@ -1,5 +1,3 @@
-'**INSERTS PAISES**'
-
 INSERT INTO countries (name, alfaisotwo, alfaisothree, iscode) 
 VALUES ('Afganistán', 'AF', 'AFG', '4'),
 ('Albania', 'AL', 'ALB', '8'),
@@ -247,13 +245,8 @@ VALUES ('Afganistán', 'AF', 'AFG', '4'),
 ('Zambia', 'ZM', 'ZMB', '894'),
 ('Zimbabwe', 'ZW', 'ZWE', '716');
 
-'INSERT SUBDIVICIONES**'
-
 INSERT INTO subdivisioncategories (description) 
 VALUES ('departament'),('capital district'),('state'),('district'),('outlying area');
-
-**INSERT Regiones y estados**
-
 
 INSERT INTO stateorregions(code,nombre,country_id,code3166,subdivision_id)
 VALUES ()

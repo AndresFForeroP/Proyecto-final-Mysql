@@ -1,5 +1,3 @@
-'CREACIÓN DE TABLAS'
-
 CREATE DATABASE ProyectoMysql;
 USE ProyectoMysql;
 CREATE TABLE IF NOT EXISTS countries (
