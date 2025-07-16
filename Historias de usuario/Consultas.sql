@@ -15,56 +15,6 @@ WHERE cps.price = (
 )
 ORDER BY producto;
 
-'RESULTADO
-+---------------------------+------------------------+---------+----------------------+
-| producto                  | empresa                | precio  | ciudad               |
-+---------------------------+------------------------+---------+----------------------+
-| Aceite de oliva           | ElectroHogar           |   79.99 | NORCASIA             |
-| Aire acondicionado        | Óptica Visión          |   49.99 | CALAMAR              |
-| Analgésico                | Farmacia Salud         |    5.99 | SAN LUIS             |
-| Analgésico                | Café Aroma             |   12.99 | BUENAVISTA           |
-| Analgésico                | Restaurante Sabor      |   12.99 | SAN JACINTO          |
-| Anillo de plata           | Farmacia Vida          |   59.99 | ABEJORRAL            |
-| Anillo de plata           | Joyas Brillantes       |   89.99 | SAN JERONIMO         |
-| Arroz premium             | SuperAhorro            |     3.5 | SORA                 |
-| Arroz premium             | Ropa Moda              |   49.99 | SALGAR               |
-| Bicicleta montañera       | Gimnasio Power         |   39.99 | VILLANUEVA           |
-| Café premium              | Belleza Total          |   39.99 | PUEBLORRICO          |
-| Camiseta básica           | Ropa Moda              |   25.99 | SALGAR               |
-| Camiseta básica           | Moda Elegante          |   25.99 | EL CARMEN DE VIBORAL |
-| Cepillo dental eléctrico  | ElectroHogar           |  599.99 | NORCASIA             |
-| Cerveza artesanal         | Gimnasio Power         |  499.99 | VILLANUEVA           |
-| Cerveza artesanal         | Deportes Extremos      |  499.99 | SUAN                 |
-| Collar de oro             | Joyeria Lux            |   89.99 | CAUCASIA             |
-| Crema hidratante          | Clínica Moderna        |    15.5 | ENVIGADO             |
-| Crema hidratante          | SuperDescuentos        |   14.99 | TURMEQUE             |
-| Habitación estándar       | Hotel Plaza            |      75 | BURITICA             |
-| Habitación estándar       | Hotel Paraíso          |      75 | ABEJORRAL            |
-| Habitación estándar       | Café Aroma             |   15.99 | BUENAVISTA           |
-| Juego de ollas            | Gasolinera Express     |   29.99 | ENTRERRIOS           |
-| Juego de sábanas          | ElectroHogar           |  349.99 | NORCASIA             |
-| Laptop ultradelgada       | SuperDescuentos        |  129.99 | TURMEQUE             |
-| Libro bestseller          | Hotel Plaza            |   89.99 | BURITICA             |
-| Libro bestseller          | Librería Conocimiento  |   22.99 | CANDELARIA           |
-| Menú del día              | Restaurante La Casona  |   12.99 | CUBARA               |
-| Menú del día              | Restaurante Sabor      |   12.99 | SAN JACINTO          |
-| Mochila resistente        | Muebles Elegantes      |  149.99 | PUERTO BOYACA        |
-| Pantalón vaquero          | TechWorld              |  799.99 | MACEO                |
-| Parrilla eléctrica        | Belleza Total          |   49.99 | PUEBLORRICO          |
-| Parrilla eléctrica        | Farmacia Vida          |   49.99 | ABEJORRAL            |
-| Reloj inteligente         | Deportes Extremos      |  199.99 | SUAN                 |
-| Robot aspirador           | Óptica Visión          |   59.99 | CALAMAR              |
-| Set de maquillaje         | Muebles Elegantes      |  199.99 | PUERTO BOYACA        |
-| Smartphone                | Gasolinera Express     |  599.99 | ENTRERRIOS           |
-| Suscripción gimnasio      | Gimnasio Activo        |      45 | SALGAR               |
-| Suscripción gimnasio      | Gasolinera Rápida      |      45 | ARMENIA              |
-| Televisor 55"             | TechWorld              |  899.99 | MACEO                |
-| Zapatos formales          | TechWorld              | 1299.99 | MACEO                |
-| Zapatos formales          | Joyeria Lux            |  299.99 | CAUCASIA             |
-+---------------------------+------------------------+---------+----------------------+
-42 rows in set (0,00 sec)'
-
-
 '2.Como administrador, deseo obtener el top 5 de clientes que más productos han calificado 
 en los últimos 6 meses.'
 
@@ -79,3 +29,145 @@ LIMIT 5;
 '3.Como gerente de ventas, quiero ver la distribución de productos por categoría y unidad 
 de medida.'
 
+SELECT p.name AS producto, c.description AS categoria, um.description AS unidad_medida
+FROM products AS p
+JOIN categories AS c ON c.id = p.category_id
+JOIN companyproducts AS cps ON cps.product_id = p.id
+JOIN unitofmeasure AS um ON um.id = cps.unitmeasure_id; 
+
+'4.Como cliente, quiero saber qué productos tienen calificaciones superiores al promedio 
+general.'
+
+SELECT p.name AS producto, qp.rating AS calificacion
+FROM products AS p
+JOIN quality_products AS qp ON qp.product_id = p.id
+WHERE qp.rating > (SELECT AVG(rating) FROM quality_products)
+ORDER BY calificacion DESC;
+
+'5.Como auditor, quiero conocer todas las empresas que no han recibido ninguna calificación.'
+
+SELECT c.name AS empresa
+FROM companies AS c
+WHERE NOT EXISTS (
+    SELECT *
+    FROM rates AS r
+    WHERE r.company_id = c.id
+);
+
+'6.Como operador, deseo obtener los productos que han sido añadidos como favoritos por más 
+de 10 clientes distintos.'
+
+SELECT p.name AS producto,COUNT(f.customer_id) AS cantidad_favoritos
+FROM favorites f
+JOIN companyproducts AS cp ON f.company_id = cp.company_id
+JOIN products AS p ON cp.product_id = p.id
+GROUP BY p.id, p.name
+HAVING COUNT(f.customer_id) > 10
+ORDER BY cantidad_favoritos DESC;
+
+'7.Como gerente regional, quiero obtener todas las empresas activas por ciudad y categoría.'
+
+SELECT c.name AS empresa, cm.name AS ciudad, ct.description AS categoria
+FROM companies as c
+JOIN citiesormunicipalities AS cm ON cm.id = c.city_id
+JOIN categories AS ct ON ct.id = c.category_id
+WHERE c.isactivate = TRUE;
+
+'8.Como especialista en marketing, deseo obtener los 10 productos más calificados en 
+cada ciudad.'
+
+NO ME SE SALIO :c
+
+'9.Como técnico, quiero identificar productos sin unidad de medida asignada.'
+
+SELECT p.name AS producto
+FROM products AS p
+LEFT JOIN companyproducts AS cps ON p.id = cps.product_id
+WHERE cps.unitmeasure_id IS NULL;
+
+'10.Como gestor de beneficios, deseo ver los planes de membresía sin beneficios registrados.'
+
+SELECT m.name AS Membresia, m.description AS Descripcion
+FROM memberships AS m
+LEFT JOIN membershipbenefits mb ON m.id = mb.membership_id
+WHERE mb.membership_id IS NULL
+ORDER BY m.name;
+
+'11.Como supervisor, quiero obtener los productos de una categoría específica con su 
+promedio de calificación.'
+
+SELECT p.name AS Productos, c.description AS categories, AVG(qp.rating) AS Promedio_rating
+FROM products AS p
+JOIN quality_products AS qp ON qp.product_id = p.id
+JOIN categories AS c ON c.id = p.category_id
+WHERE c.description = 'Farmacias'
+GROUP BY p.id, p.name, c.description
+ORDER BY Promedio_rating DESC;
+
+'12.Como asesor, deseo obtener los clientes que han comprado productos de más de una empresa.'
+
+SELECT c.name AS Cliente, COUNT(cps.company_id) AS total_empresas
+FROM customers AS c
+JOIN companyproducts AS cps ON cps.product_id IN (
+    SELECT qp.product_id
+    FROM quality_products AS qp
+    WHERE qp.customer_id = c.id
+)
+GROUP BY c.id,c.name
+HAVING COUNT(cps.company_id) > 1
+ORDER BY total_empresas DESC;
+
+'13.Como director, quiero identificar las ciudades con más clientes activos.'
+
+SELECT cm.name AS Ciudad, COUNT(c.id) AS Total_Cliente
+FROM customers AS c
+JOIN citiesormunicipalities AS cm ON c.city_id = cm.id
+GROUP BY cm.id, cm.name
+ORDER BY Total_Cliente DESC
+LIMIT 10;
+
+'14.Como analista de calidad, deseo obtener el ranking de productos por 
+empresa basado en la media de quality_products.'
+
+SELECT qp.company_id,qp.product_id,AVG(qp.rating) AS avg_rating
+FROM quality_products qp
+GROUP BY qp.company_id, qp.product_id
+ORDER BY qp.company_id, avg_rating DESC;
+
+'15.Como administrador, quiero listar empresas que ofrecen más de cinco productos distintos.'
+
+SELECT c.name AS empresa, COUNT(cp.product_id) AS cantidad_productos
+FROM companies c
+JOIN companyproducts cp ON c.id = cp.company_id
+GROUP BY c.id, c.name
+HAVING COUNT(DISTINCT cp.product_id) > 2
+ORDER BY cantidad_productos DESC;
+
+'16.Como cliente, deseo visualizar los productos favoritos que aún no han sido calificados.'
+
+NO ME SE SALIO :c
+
+'17.Como desarrollador, deseo consultar los beneficios asignados a cada audiencia junto 
+con su descripción.'
+
+SELECT a.description AS Audiencia, b.description AS Beneficio, b.detail AS Detalles
+FROM audiences AS a 
+JOIN audiencebenefits AS ab ON a.id = ab.audience_id
+JOIN benefits AS b ON ab.benefit_id = b.id;
+
+'18.Como operador logístico, quiero saber en qué ciudades hay empresas sin productos asociados.'
+
+SELECT cm.name AS Ciudad
+FROM citiesormunicipalities AS cm
+JOIN companies AS c ON cm.id = c.city_id
+LEFT JOIN companyproducts AS cps ON c.id = cps.company_id
+WHERE cps.company_id IS NULL;
+
+'19.Como técnico, deseo obtener todas las empresas con productos duplicados por nombre.'
+
+NO ME SALIO :c
+
+'20.Como analista, quiero una vista resumen de clientes, productos favoritos y promedio 
+de calificación recibido.'
+
+NO ME SALIO 

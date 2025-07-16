@@ -41,7 +41,8 @@ CREATE TABLE IF NOT EXISTS companies (
     city_id INT,
     audience_id INT,
     cellphone VARCHAR(15) UNIQUE,
-    email VARCHAR(80) UNIQUE
+    email VARCHAR(80) UNIQUE,
+    isactivate BOOLEAN
 );
 
 CREATE TABLE IF NOT EXISTS categories (
