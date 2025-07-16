@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS subdivisioncategories (
 );
 
 CREATE TABLE IF NOT EXISTS citiesormunicipalities (
-    code INT PRIMARY KEY AUTO_INCREMENT,
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    code VARCHAR(6),
     name VARCHAR(60),
     statereg_id VARCHAR(6)
 );
@@ -183,7 +184,7 @@ ADD CONSTRAINT fk_companies_type
 ADD CONSTRAINT fk_companies_category
     FOREIGN KEY (category_id) REFERENCES categories(id),
 ADD CONSTRAINT fk_companies_city
-    FOREIGN KEY (city_id) REFERENCES citiesormunicipalities(code),
+    FOREIGN KEY (city_id) REFERENCES citiesormunicipalities(id),
 ADD CONSTRAINT fk_companies_audience
     FOREIGN KEY (audience_id) REFERENCES audiences(id);
 
@@ -201,7 +202,7 @@ ADD CONSTRAINT fk_detailsfavorites_company
 
 ALTER TABLE customers
 ADD CONSTRAINT fk_customers_city
-    FOREIGN KEY (city_id) REFERENCES citiesormunicipalities(code),
+    FOREIGN KEY (city_id) REFERENCES citiesormunicipalities(id),
 ADD CONSTRAINT fk_customers_audience
     FOREIGN KEY (audience_id) REFERENCES audiences(id);
 
