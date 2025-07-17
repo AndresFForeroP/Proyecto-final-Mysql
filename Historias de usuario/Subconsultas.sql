@@ -31,8 +31,8 @@ ORDER BY Total_productos DESC;
 '3.Como cliente, quiero ver mis productos favoritos que han sido 
 calificados por otros clientes.'
 
-SELECT c.name AS Cliente, p.name AS Producto,comp.name AS Empresa,
-    qp.rating AS Calificacion, (SELECT cr.name FROM customers AS cr WHERE cr.id = qp.customer_id) AS Calificado_Por
+SELECT c.name AS Cliente, p.name AS Producto,comp.name AS Empresa,qp.rating AS Calificacion, (
+    SELECT cr.name FROM customers AS cr WHERE cr.id = qp.customer_id) AS Calificado_Por
 FROM customers AS c
 JOIN favorites AS f ON c.id = f.customer_id
 JOIN companies AS comp ON f.company_id = comp.id
@@ -219,7 +219,7 @@ WHERE(
 ORDER BY b.description;
 
 
-1'9.Como técnico, quiero encontrar empresas cuyos productos no tengan unidad de medida definida.'
+'19.Como técnico, quiero encontrar empresas cuyos productos no tengan unidad de medida definida.'
 
 SELECT c.name AS Nombre_Empresa
 FROM companies AS c
