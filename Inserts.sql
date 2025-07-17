@@ -1580,7 +1580,13 @@ INSERT INTO products (name, detail, price, category_id, image) VALUES
 ('Impresora Multifuncional', 'Impresora láser a color con escáner y copiadora', 249.99, 9, 'impresora.jpg'),
 ('Sartén Antiadherente', 'Sartén de aluminio 28cm con recubrimiento cerámico', 35.00, 4, 'sarten.jpg'),
 ('Kit de Limpieza Facial', 'Incluye limpiador, tónico y crema hidratante', 65.50, 5, 'kit_facial.jpg'),
-('Balón de Fútbol', 'Balón profesional talla 5 para todo terreno', 29.99, 8, 'balon_futbol.jpg');
+('Balón de Fútbol', 'Balón profesional talla 5 para todo terreno', 29.99, 8, 'balon_futbol.jpg'),
+('Silla de Ruedas Plegable', 'Ligera, de aluminio, ideal para transporte y uso diario.', 299.99, 7, 'None'),
+('Libreta Ecológica', 'Cuaderno de papel reciclado, 100 hojas, tamaño A5.', 8.50, 9, 'None'),
+('Botella Térmica Deportiva', 'Acero inoxidable, doble pared, 750ml, mantiene frío 24h.', 25.00, 8, 'None'),
+('Kit de Siembra de Hierbas', 'Incluye 3 tipos de semillas, macetas biodegradables y tierra.', 19.99, 4, 'None'),
+('Mascarilla Facial de Arcilla', 'Purificante y desintoxicante, para todo tipo de piel, 150ml.', 18.00, 5, 'None');
+
 
 INSERT INTO companies (id, type_id, name, category_id, city_id, audience_id, cellphone, email, isactivate) VALUES
 ('COMP001', 1, 'Restaurante La Casona', 1, 231, 4, '3001234567', 'info@lacasona.com', 1), 
@@ -1659,7 +1665,7 @@ INSERT INTO customers (name, city_id, audience_id, cellphone, email, address) VA
 ('Mauricio Sosa', 43, 4, '3333344556', 'mauricio.s@email.com', 'Carrera 56 #78-90'),
 ('Claudia Rangel', 289, 4, '3344455667', 'claudia.r@email.com', 'Avenida 78 #90-12'),
 ('Renato Paz', 76, 4, '3355566778', 'renato.p@email.com', 'Calle 34 #56-78'),
-('Lorena Cárdenas', 198, 4, '3366677889', 'lorena.c@email.com', 'Diagonal 67 #89-01'),
+('Lorena Cárdenas', 198, 4, '3366677881', 'lorena.c@email.com', 'Diagonal 67 #89-01'),
 ('Víctor Maldonado', 321, 4, '3377788990', 'victor.m@email.com', 'Carrera 90 #12-34'),
 ('Jimena Ortega', 54, 4, '3388899001', 'jimena.o@email.com', 'Avenida 12 #34-56'),
 ('Rodrigo Paredes', 187, 4, '3399900112', 'rodrigo.p@email.com', 'Calle 56 #78-90'),
@@ -1801,12 +1807,12 @@ INSERT INTO companyproducts (company_id, product_id, price, unitmeasure_id) VALU
 ('COMP011', 15, 899.99, 1),
 ('COMP012', 3, 12.99, 2),
 ('COMP012', 4, 15.99, 1),
-('COMP013', 17, 79.99, 1),
+('COMP013', 17, 79.99, NULL),
 ('COMP013', 18, 349.99, 1),
 ('COMP013', 19, 599.99, 1),
 ('COMP014', 13, 39.99, 1),
 ('COMP014', 27, 49.99, 1),
-('COMP015', 14, 499.99, 1),
+('COMP015', 14, 499.99, NULL),
 ('COMP015', 21, 199.99, 1),
 ('COMP016', 12, 299.99, 1),
 ('COMP016', 22, 89.99, 1),
@@ -1814,7 +1820,7 @@ INSERT INTO companyproducts (company_id, product_id, price, unitmeasure_id) VALU
 ('COMP017', 23, 199.99, 1),
 ('COMP018', 9, 59.99, 1),
 ('COMP018', 27, 49.99, 1),
-('COMP019', 7, 14.99, 4),
+('COMP019', 7, 14.99, NULL),
 ('COMP019', 16, 129.99, 1),
 ('COMP020', 1, 25.99, 1),
 ('COMP020', 2, 49.99, 1),
@@ -1824,7 +1830,7 @@ INSERT INTO companyproducts (company_id, product_id, price, unitmeasure_id) VALU
 ('COMP022', 4, 75.00, 1),
 ('COMP022', 8, 89.99, 1),
 ('COMP023', 5, 12.99, 1),
-('COMP023', 3, 12.99, 2),
+('COMP023', 3, 12.99, NULL),
 ('COMP024', 6, 599.99, 1),
 ('COMP024', 30, 29.99, 1),
 ('COMP025', 14, 499.99, 1),
@@ -1884,7 +1890,12 @@ INSERT INTO quality_products (product_id, customer_id, poll_id, company_id, date
 (27, 27, 2, 'COMP018', '2025-02-17 12:00:00', 4.4),
 (28, 28, 2, 'COMP021', '2025-02-18 14:15:00', 4.7),
 (29, 5, 2, 'COMP021', '2025-02-19 16:30:00', 4.9),
-(30, 30, 2, 'COMP024', '2025-02-20 09:45:00', 4.5);
+(30, 10, 2, 'COMP024', '2025-02-20 09:45:00', 4.5),
+(45, 2, 2, 'COMP007', '2025-07-16 10:00:00', 4.0),
+(46, 3, 2, 'COMP009', '2025-07-16 10:05:00', 5.0),
+(47, 2, 2, 'COMP008', '2025-07-16 10:10:00', 4.5),
+(48, 4, 2, 'COMP004', '2025-07-16 10:15:00', 3.8),
+(49, 5, 2, 'COMP005', '2025-07-16 10:20:00', 4.2);
 
 INSERT INTO membershipperiods (membership_id, period_id, price) VALUES 
 (1, 4, 9.99),
